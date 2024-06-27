@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESS Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom styles -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding-top: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .clock-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .clock {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+        }
+        .btn-clock {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>ESS Dashboard</h2>
+    <div class="clock-container">
+        <div class="clock" id="clock">00:00:00</div>
+        <button class="btn btn-primary btn-clock" id="clockInBtn">Clock In</button>
+        <button class="btn btn-danger btn-clock" id="clockOutBtn">Clock Out</button>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+    // Clock functionality
+    function updateClock() {
+        var now = new Date();
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        var seconds = now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('clock').textContent = hours + ':' + minutes + ':' + seconds;
+    }
+
+    // Clock-in and Clock-out functionality
+    document.getElementById('clockInBtn').addEventListener('click', function() {
+        var clockInTime = new Date();
+        localStorage.setItem('clockInTime', clockInTime.getTime());
+        alert('You have clocked in at ' + formatTime(clockInTime));
+    });
+
+    document.getElementById('clockOutBtn').addEventListener('click', function() {
+        var clockOutTime = new Date();
+        var clockInTime = localStorage.getItem('clockInTime');
+        if (clockInTime) {
+            clockInTime = parseInt(clockInTime);
+            var duration = (clockOutTime.getTime() - clockInTime) / 1000; // in seconds
+            var hours = Math.floor(duration / 3600);
+            var minutes = Math.floor((duration % 3600) / 60);
+            var seconds = Math.floor(duration % 60);
+            alert('You have clocked out at ' + formatTime(clockOutTime) + '\nTotal duration: ' + hours + 'h ' + minutes + 'm ' + seconds + 's');
+            localStorage.removeItem('clockInTime');
+        } else {
+            alert('You need to clock in first.');
+        }
+    });
+
+    // Format time as HH:MM:SS
+    function formatTime(date) {
+        var hours = date.getHours().toString().padStart(2, '0');
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+        var seconds = date.getSeconds().toString().padStart(2, '0');
+        return hours + ':' + minutes + ':' + seconds;
+    }
+
+    // Update clock every second
+    setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- Custom styles -->
+	<style>
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f5f5f5;
+		}
+
+		.card {
+			width: 400px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">Login</h5>
+			<form id="loginForm" th:action="@{/loginform}" method="post" onsubmit="return validateForm()">
+				<div class="form-group">
+					<label for="username">Username</label>
+					<input type="text" class="form-control" id="username" name="username" required>
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" id="password" name="password" required>
+				</div>
+				<button type="submit" class="btn btn-primary">Login</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<!-- Custom JavaScript -->
+	<script>
+		function validateForm() {
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+
+			// Basic validation (you can add more complex validation if needed)
+			if (username.trim() === "" || password.trim() === "") {
+				alert("Please enter both username and password.");
+				return false;
+			}
+
+			return true;
+		}
+	</script>
+
+</body>
+
+</html>
