@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login</title>
-	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- Custom styles -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
 	<style>
 		body {
 			display: flex;
@@ -19,50 +19,175 @@
 
 		.card {
 			width: 400px;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.card:hover {
+			transform: scale(1.02);
+		}
+
+		.card-body {
+			padding: 20px;
+		}
+
+		.card-title {
+			margin-bottom: 20px;
+			font-size: 1.5rem;
+			text-align: center;
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+		}
+
+		.input-group-text {
+			padding: .375rem 1.1rem;
+		}
+
+		.input-group {
+			position: relative;
+		}
+
+		.toggle-password {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			cursor: pointer;
+			color: #999;
+			transition: color 0.3s ease-in-out;
+		}
+
+		.toggle-password:hover {
+			color: #555;
+		}
+
+		#passwordHelpBlock {
+			margin-top: 10px;
+		}
+
+		.btn-primary {
+			width: 100%;
+			transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		}
+
+		.btn-primary:hover {
+			background-color: #0056b3;
+			border-color: #0056b3;
+		}
+
+		.text-center {
+			margin-top: 20px;
+		}
+
+		.text-center a {
+			color: #007bff;
+			text-decoration: none;
+			transition: color 0.3s ease-in-out;
+		}
+
+		.text-center a:hover {
+			color: #0056b3;
+		}
+
+		.error-message {
+			color: red;
+			font-size: 0.875rem;
+			margin-top: 5px;
 		}
 	</style>
 </head>
 
 <body>
-
 	<div class="card">
 		<div class="card-body">
-			<h5 class="card-title">Login</h5>
-			<form id="loginForm" th:action="@{/login}" method="post" onsubmit="return validateForm()">
+			<h5 class="card-title">HRMS</h5>
+			<form id="loginForm" th:action="@{/login}" method="post">
+				<!-- Display error message if login attempt failed -->
+				<div th:if="${param.error}" class="alert alert-danger">
+					Invalid email and password
+				</div>
 				<div class="form-group">
-					<label for="username">Username</label>
-					<input type="text" class="form-control" id="username" name="username" required>
+					<label for="email">Email</label>
+					<input type="text" class="form-control" id="email" name="username" required
+						oninput="validateEmail()">
+					<span id="emailError" class="error-message"></span>
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
-					<input type="password" class="form-control" id="password" name="password" required>
+					<div class="input-group">
+						<input type="password" class="form-control" id="password" name="password" required disabled>
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i id="eye-icon" class="fas fa-eye-slash toggle-password"></i>
+							</span>
+						</div>
+					</div>
+					<small id="passwordHelpBlock" class="form-text text-muted">
+						<a th:href="@{/forgotPasswordForm}" id="forgotPasswordLink">Forgot password?</a>
+					</small>
 				</div>
-				<button type="submit" class="btn btn-primary">Login</button>
+				<button type="submit" class="btn btn-primary" id="loginButton" disabled>Login</button>
 			</form>
+			<hr>
+			<div class="text-center">
+				<p>Don't have an account? <a href="#" th:href="@{/signUp}">Sign Up</a></p>
+			</div>
 		</div>
 	</div>
 
-	<!-- Bootstrap JS and dependencies -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-	<!-- Custom JavaScript -->
 	<script>
-		function validateForm() {
-			var username = document.getElementById("username").value;
-			var password = document.getElementById("password").value;
+		// Function to toggle password visibility
+		function togglePasswordVisibility() {
+			var passwordInput = document.getElementById('password');
+			var icon = document.getElementById('eye-icon');
 
-			// Basic validation (you can add more complex validation if needed)
-			if (username.trim() === "" || password.trim() === "") {
-				alert("Please enter both username and password.");
-				return false;
+			if (passwordInput.type === 'password') {
+				passwordInput.type = 'text';
+				icon.classList.remove('fa-eye-slash');
+				icon.classList.add('fa-eye');
+			} else {
+				passwordInput.type = 'password';
+				icon.classList.remove('fa-eye');
+				icon.classList.add('fa-eye-slash');
 			}
 
-			return true;
+			// Fix for placeholder disappearing issue
+			passwordInput.focus(); // Focus on the input to trigger placeholder display
+			passwordInput.blur(); // Blur immediately to reset focus
+		}
+
+		// Event listener for clicking on the eye icon
+		document.getElementById('eye-icon').addEventListener('click', function () {
+			togglePasswordVisibility();
+		});
+
+		// Function to validate email format and enable/disable password and login button
+		function validateEmail() {
+			var emailInput = document.getElementById('email');
+			var emailError = document.getElementById('emailError');
+			var loginButton = document.getElementById('loginButton');
+			var passwordInput = document.getElementById('password');
+			var email = emailInput.value;
+			var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+			if (!emailRegex.test(email)) {
+				emailError.textContent = 'Enter a valid email address';
+				loginButton.setAttribute('disabled', 'disabled');
+				passwordInput.setAttribute('disabled', 'disabled');
+			} else {
+				emailError.textContent = '';
+				loginButton.removeAttribute('disabled');
+				passwordInput.removeAttribute('disabled');
+			}
 		}
 	</script>
-
 </body>
 
 </html>

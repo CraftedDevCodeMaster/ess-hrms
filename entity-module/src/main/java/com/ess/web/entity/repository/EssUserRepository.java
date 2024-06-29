@@ -10,4 +10,8 @@ import jakarta.transaction.Transactional;
 @Repository
 @Transactional
 public interface EssUserRepository extends JpaRepository<EssUser, Long> {
+
+	boolean existsByEmailAndPassword(String email, String password);
+
+	EssUser findByEmail(String email);
 }
