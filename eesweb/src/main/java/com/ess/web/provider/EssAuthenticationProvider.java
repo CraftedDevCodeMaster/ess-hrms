@@ -16,6 +16,9 @@ import com.ess.web.entity.service.EssUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author PRAVEENREDDY R
+ */
 @Slf4j
 @Component
 public class EssAuthenticationProvider implements AuthenticationProvider {

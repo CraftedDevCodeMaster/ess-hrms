@@ -135,7 +135,7 @@
     <div class="container">
         <!-- Left side: Sign-up form -->
         <div class="sign-up-form">
-            <h5 class="card-title">HRMS - Sign Up</h5>
+            <h5 class="card-title">Reddy's - Sign Up</h5>
             <form id="signupForm" th:action="@{/signup}" method="post" onsubmit="return validateForm()">
                 <div class="form-row">
                     <div class="col">
@@ -253,7 +253,7 @@
 
             // Password validation
             if (newPasswordInput.value.length < 6) {
-                newPasswordError.textContent = 'Password must be at least 6 characters long.';
+                newPasswordError.textContent = 'Password must be at least 6 characters long.\';
                 signupButton.disabled = true; // Disable sign up button
                 confirmPasswordInput.disabled = true; // Disable confirm password field
             } else {
@@ -262,7 +262,7 @@
             }
 
             if (newPasswordInput.value !== confirmPasswordInput.value) {
-                confirmPasswordError.textContent = 'Passwords do not match.';
+                confirmPasswordError.textContent = 'Passwords do not match';
                 signupButton.disabled = true; // Disable sign up button
             }
         }

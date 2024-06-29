@@ -12,7 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
-
+/**
+ * @author PRAVEENREDDY R
+ */
 @Configuration
 @EnableWebSecurity
 public class EssSpringSecurityConfig {
