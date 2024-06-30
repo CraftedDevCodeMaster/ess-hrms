@@ -1,5 +1,6 @@
 package com.ess.web.provider;
 
+import java.util.Date;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,20 +43,20 @@ public class EssAuthenticationProvider implements AuthenticationProvider {
 				throw new BadCredentialsException("Authentication failed. User not found.");
 			}
 
-			if (!passwordEncoder.matches(password, essUser.getPassword())) {
+			if (passwordEncoder.matches(password, essUser.getPassword())) {
+				log.info("User {} authenticated successfully", email);
+				essUser.setLastLoginDate(new Date());
+				essUserService.save(essUser);
+				return new UsernamePasswordAuthenticationToken(email, password, Collections.emptyList());
+
+			} else {
 				log.error("Invalid password for email: {}", email);
 				throw new BadCredentialsException("Authentication failed. Invalid password.");
 			}
 
-			log.info("User {} authenticated successfully", email);
-			return new UsernamePasswordAuthenticationToken(email, password, Collections.emptyList());
-
 		} catch (IllegalArgumentException | BadCredentialsException e) {
 			log.error("Authentication failed: {}", e.getMessage());
 			throw e;
-		} catch (Exception e) {
-			log.error("Unexpected error during authentication", e);
-			throw new RuntimeException("Unexpected error occurred");
 		}
 	}
 

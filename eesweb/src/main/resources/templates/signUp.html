@@ -2,274 +2,301 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
+	<style>
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 0;
+		}
 
-        .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
+		.container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 90%;
+			max-width: 1200px;
+			margin: auto;
+			padding: 20px;
+		}
 
-        .company-info {
-            width: 45%;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+		.company-info {
+			width: 45%;
+			padding: 20px;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
 
-        .testimonial {
-            margin-bottom: 20px;
-        }
+		.testimonial {
+			margin-bottom: 20px;
+		}
 
-        .sign-up-form {
-            width: 45%;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+		.sign-up-form {
+			width: 45%;
+			padding: 20px;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+		.form-group {
+			margin-bottom: 20px;
+		}
 
-        .btn-primary {
-            width: 100%;
-            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-        }
+		.btn-primary {
+			width: 100%;
+			transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		}
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
+		.btn-primary:hover {
+			background-color: #0056b3;
+			border-color: #0056b3;
+		}
 
-        .text-center {
-            margin-top: 20px;
-        }
+		.text-center {
+			margin-top: 20px;
+		}
 
-        .text-center a {
-            color: #007bff;
-            text-decoration: none;
-            transition: color 0.3s ease-in-out;
-        }
+		.text-center a {
+			color: #007bff;
+			text-decoration: none;
+			transition: color 0.3s ease-in-out;
+		}
 
-        .text-center a:hover {
-            color: #0056b3;
-        }
+		.text-center a:hover {
+			color: #0056b3;
+		}
 
-        .error-message {
-            color: red;
-            font-size: 0.875rem;
-            margin-top: 5px;
-        }
+		.error-message {
+			color: red;
+			font-size: 0.875rem;
+			margin-top: 5px;
+		}
 
-        /* Media query for responsive layout */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: stretch;
-            }
+		/* Media query for responsive layout */
+		@media (max-width: 768px) {
+			.container {
+				flex-direction: column;
+				align-items: stretch;
+			}
 
-            .company-info,
-            .sign-up-form {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-        }
+			.company-info,
+			.sign-up-form {
+				width: 100%;
+				margin-bottom: 20px;
+			}
+		}
 
-        /* Custom styles for password visibility toggle */
-        .input-group-text {
-            padding: .375rem 1.1rem;
-        }
+		/* Custom styles for password visibility toggle */
+		.input-group-text {
+			padding: .375rem 1.1rem;
+		}
 
-        .input-group {
-            position: relative;
-        }
+		.input-group {
+			position: relative;
+		}
 
-        .toggle-password {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #999;
-            transition: color 0.3s ease-in-out;
-        }
+		.toggle-password {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			cursor: pointer;
+			color: #999;
+			transition: color 0.3s ease-in-out;
+		}
 
-        .toggle-password:hover {
-            color: #555;
-        }
+		.toggle-password:hover {
+			color: #555;
+		}
 
-        /* Custom style for disabled button */
-        .disabled-button {
-            pointer-events: none;
-            background-color: #ccc !important;
-            border-color: #ccc !important;
-        }
-    </style>
+		/* Custom style for disabled button */
+		.disabled-button {
+			pointer-events: none;
+			background-color: #ccc !important;
+			border-color: #ccc !important;
+		}
+
+		.alert-success {
+			background-color: #d4edda;
+			border-color: #c3e6cb;
+			color: #155724;
+			padding: 0.75rem 1.25rem;
+			margin-bottom: 1rem;
+			border: 1px solid transparent;
+			border-radius: 0.25rem;
+		}
+	</style>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Left side: Sign-up form -->
-        <div class="sign-up-form">
-            <h5 class="card-title">Reddy's - Sign Up</h5>
-            <form id="signupForm" th:action="@{/signup}" method="post" onsubmit="return validateForm()">
-                <div class="form-row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="firstName">First Name*</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" required>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="workEmail">Work Email*</label>
-                    <input type="email" class="form-control" id="workEmail" name="workEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="phoneNumber">Phone Number*</label>
-                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>
-                </div>
-                <div class="form-group">
-                    <label for="companyName">Company Name*</label>
-                    <input type="text" class="form-control" id="companyName" name="companyName" required>
-                </div>
-                <div class="form-group">
-                    <label for="newPassword">Enter Password*</label>
-                    <div class="input-group">
-                        <input type="password" class="form-control" id="newPassword" name="newPassword" minlength="6" required onkeyup="validatePassword()">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <i id="newPasswordIcon" class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('newPassword')"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div id="newPasswordError" class="error-message"></div>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password*</label>
-                    <div class="input-group">
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" minlength="6" required disabled onkeyup="validatePassword()">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <i id="confirmPasswordIcon" class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('confirmPassword')"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div id="confirmPasswordError" class="error-message"></div>
-                </div>
-                <button type="submit" class="btn btn-primary" id="signupButton" disabled>Sign Up</button>
-            </form>
-            <hr>
-            <div class="text-center">
-                <p>Already have an account? <a href="#" th:href="@{/login}">Login</a></p>
-            </div>
-        </div>
+	<div class="container">
+		<!-- Left side: Sign-up form -->
+		<div class="sign-up-form">
+			<h5 class="card-title">Sign Up</h5>
+			<!-- Display error message if there's any -->
+			<div th:if="${message}" class="alert alert-danger" th:text="${message}"></div>
 
-        <!-- Right side: Company information and testimonial -->
-        <div class="company-info">
-            <div class="testimonial">
-                <p>"After conducting a thorough assessment of available HR Payroll solutions, we confidently chose
-                    Reddy's Portal, a decision that has consistently proven its worth. Reddy's Portal has played a
-                    crucial role in our company's expansion, enabling us to scale our team from 50 to over 400 employees
-                    in just two years."</p>
-                <p><strong>Praveen Reddy</strong><br>Reddy's Technologies</p>
-            </div>
-            <p>Over 100+ companies trust Reddy's</p>
-            <!-- You can add logos here -->
-            <div class="logos">
-                <!--<img src="logo.png" alt="Logo">-->
-            </div>
-        </div>
-    </div>
+			<!-- Display success message if successMessage is true -->
+			<div th:if="${successMessage}" class="alert alert-success">
+				<p>Account Created Successfully. Please <a th:href="@{/login}">click here</a> to login.</p>
+			</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
+			<form id="signupForm" th:action="@{/signUp}" th:object="${essSignUp}" method="post"
+				onsubmit="return validateForm()">
+				<div class="form-row">
+					<div class="col">
+						<div class="form-group">
+							<label for="firstName">First Name*</label>
+							<input type="text" class="form-control" id="firstName" name="firstName" required>
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-group">
+							<label for="lastName">Last Name</label>
+							<input type="text" class="form-control" id="lastName" name="lastName">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="workEmail">Work Email*</label>
+					<input type="email" class="form-control" id="workEmail" name="email" required>
+				</div>
+				<div class="form-group">
+					<label for="phoneNumber">Phone Number*</label>
+					<input type="tel" class="form-control" id="phoneNumber" name="mobileNumber" required>
+				</div>
+				<div class="form-group">
+					<label for="companyName">Company Name*</label>
+					<input type="text" class="form-control" id="companyName" name="companyName" required>
+				</div>
+				<div class="form-group">
+					<label for="newPassword">Enter Password*</label>
+					<div class="input-group">
+						<input type="password" class="form-control" id="newPassword" name="newPassword" minlength="6"
+							required onkeyup="validatePassword()">
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i id="newPasswordIcon" class="fas fa-eye-slash toggle-password"
+									onclick="togglePasswordVisibility('newPassword')"></i>
+							</span>
+						</div>
+					</div>
+					<div id="newPasswordError" class="error-message"></div>
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword">Confirm Password*</label>
+					<div class="input-group">
+						<input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+							minlength="6" required disabled onkeyup="validatePassword()">
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i id="confirmPasswordIcon" class="fas fa-eye-slash toggle-password"
+									onclick="togglePasswordVisibility('confirmPassword')"></i>
+							</span>
+						</div>
+					</div>
+					<div id="confirmPasswordError" class="error-message"></div>
+				</div>
+				<button type="submit" class="btn btn-primary" id="signupButton" disabled>Sign Up</button>
+			</form>
+			<hr>
+			<div class="text-center">
+				<p>Already have an account? <a href="#" th:href="@{/login}">Login</a></p>
+			</div>
+		</div>
 
-    <script>
-        // Function to toggle password visibility
-        function togglePasswordVisibility(inputId) {
-            var passwordInput = document.getElementById(inputId);
-            var icon = document.getElementById(inputId + 'Icon');
+		<!-- Right side: Company information and testimonial -->
+		<div class="company-info">
+			<div class="card-title" style="text-align: center;">
+				<img th:src="@{/images/reddysicpn-removebg-preview.png}" alt="Logo" width="200px" height="100px">
+			</div>
 
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            }
+			<div class="testimonial">
+				<p>"After conducting a thorough assessment of available HR Payroll solutions, we confidently chose
+					Reddy's Portal, a decision that has consistently proven its worth. Reddy's Portal has played a
+					crucial role in our company's expansion, enabling us to scale our team from 50 to over 400 employees
+					in just two years."</p>
+				<p><strong>Praveen Reddy</strong><br>Reddy's Technologies</p>
+			</div>
+			<p>Over 100+ companies trust Reddy's</p>
+			<!-- You can add logos here -->
+			<div class="logos">
+				<!--<img src="logo.png" alt="Logo">-->
+			</div>
+		</div>
+	</div>
 
-            // Focus on the input to trigger placeholder display
-            passwordInput.focus();
-            // Blur immediately to reset focus
-            passwordInput.blur();
-        }
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
 
-        // Function to validate password strength
-        function validatePassword() {
-            var newPasswordInput = document.getElementById('newPassword');
-            var confirmPasswordInput = document.getElementById('confirmPassword');
-            var newPasswordError = document.getElementById('newPasswordError');
-            var confirmPasswordError = document.getElementById('confirmPasswordError');
-            var signupButton = document.getElementById('signupButton');
+	<script>
+		// Function to toggle password visibility
+		function togglePasswordVisibility(inputId) {
+			var passwordInput = document.getElementById(inputId);
+			var icon = document.getElementById(inputId + 'Icon');
 
-            // Reset error messages
-            newPasswordError.textContent = '';
-            confirmPasswordError.textContent = '';
+			if (passwordInput.type === 'password') {
+				passwordInput.type = 'text';
+				icon.classList.remove('fa-eye-slash');
+				icon.classList.add('fa-eye');
+			} else {
+				passwordInput.type = 'password';
+				icon.classList.remove('fa-eye');
+				icon.classList.add('fa-eye-slash');
+			}
 
-            // Password validation
-            if (newPasswordInput.value.length < 6) {
-                newPasswordError.textContent = 'Password must be at least 6 characters long.\';
-                signupButton.disabled = true; // Disable sign up button
-                confirmPasswordInput.disabled = true; // Disable confirm password field
-            } else {
-                signupButton.disabled = false; // Enable sign up button
-                confirmPasswordInput.disabled = false; // Enable confirm password field
-            }
+			// Focus on the input to trigger placeholder display
+			passwordInput.focus();
+			// Blur immediately to reset focus
+			passwordInput.blur();
+		}
 
-            if (newPasswordInput.value !== confirmPasswordInput.value) {
-                confirmPasswordError.textContent = 'Passwords do not match';
-                signupButton.disabled = true; // Disable sign up button
-            }
-        }
+		// Function to validate password strength
+		function validatePassword() {
+			var newPasswordInput = document.getElementById('newPassword');
+			var confirmPasswordInput = document.getElementById('confirmPassword');
+			var newPasswordError = document.getElementById('newPasswordError');
+			var confirmPasswordError = document.getElementById('confirmPasswordError');
+			var signupButton = document.getElementById('signupButton');
 
-        // Initial call to validate password fields on page load
-        validatePassword();
-    </script>
+			// Reset error messages
+			newPasswordError.textContent = '';
+			confirmPasswordError.textContent = '';
+
+			// Password validation
+			if (newPasswordInput.value.length < 6) {
+				newPasswordError.textContent = 'Password must be at least 6 characters long';
+				signupButton.disabled = true; // Disable sign up button
+				confirmPasswordInput.disabled = true; // Disable confirm password field
+			} else {
+				signupButton.disabled = false; // Enable sign up button
+				confirmPasswordInput.disabled = false; // Enable confirm password field
+			}
+
+			if (newPasswordInput.value !== confirmPasswordInput.value) {
+				confirmPasswordError.textContent = 'Passwords do not match';
+				signupButton.disabled = true; // Disable sign up button
+			}
+		}
+
+		// Initial call to validate password fields on page load
+		validatePassword();
+	</script>
 </body>
 
 </html>

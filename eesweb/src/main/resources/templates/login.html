@@ -98,13 +98,27 @@
 			font-size: 0.875rem;
 			margin-top: 5px;
 		}
+
+		.alert-success {
+			background-color: #d4edda;
+			border-color: #c3e6cb;
+			color: #155724;
+			padding: 0.75rem 1.25rem;
+			margin-bottom: 1rem;
+			border: 1px solid transparent;
+			border-radius: 0.25rem;
+		}
 	</style>
 </head>
 
 <body>
 	<div class="card">
 		<div class="card-body">
-			<h5 class="card-title">Reddy's</h5>
+			<div class="card-title">
+				<img th:src="@{/images/reddysicpn-removebg-preview.png}" alt="Logo" width="150px" height="60px">
+			</div>
+			<!--<h5 class="card-title">Reddy's</h5>-->
+
 			<form id="loginForm" th:action="@{/login}" method="post">
 				<!-- Display error message if login attempt failed -->
 				<div th:if="${param.error}" class="alert alert-danger">
@@ -127,8 +141,10 @@
 						</div>
 					</div>
 					<small id="passwordHelpBlock" class="form-text text-muted">
-						<a th:href="@{/forgotPasswordForm}" id="forgotPasswordLink">Forgot password?</a>
+						<a th:href="@{/forgotPasswordForm}" id="forgotPasswordLink" class="text-decoration-none">Forgot
+							password?</a>
 					</small>
+
 				</div>
 				<button type="submit" class="btn btn-primary" id="loginButton" disabled>Login</button>
 			</form>

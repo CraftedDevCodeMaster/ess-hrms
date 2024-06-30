@@ -1,6 +1,6 @@
 package com.ess.web.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,34 +16,26 @@ import lombok.Data;
 @Entity
 @Data
 public class EssUser {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long userId;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long userId;
+	@Pattern(regexp = "^[a-zA-Z0-9_-]{1,20}$", message = "Employee ID must consist of alphanumeric characters, underscore, or hyphen, and be between 1 to 20 characters long")
+	private String empId;
 
-    @Pattern(regexp = "^[a-zA-Z0-9_-]{1,20}$")
-    private String empId;
+	@NotBlank(message = "Email is required")
+	@Email(message = "Invalid email format")
+	private String email;
 
-    @NotBlank
-    @Email
-    private String email;
+	@Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters")
+	@Pattern(regexp = "^[a-zA-Z-' ]{1,50}$", message = "Name must consist of letters, hyphens, and spaces only")
+	private String UserName;
 
-    @Size(min = 1, max = 50)
-    @Pattern(regexp = "^[a-zA-Z-' ]{1,50}$")
-    private String firstName;
+	@NotNull(message = "Password cannot be null")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$", message = "Password must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character")
+	private String password;
 
-    @Size(min = 1, max = 50)
-    @Pattern(regexp = "^[a-zA-Z-' ]{1,50}$")
-    private String lastName;
-
-    private Date lastLoginDate;
-
-    @NotNull
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$")
-    private String password;
-
-    @NotNull
-    @Pattern(regexp = "^[a-zA-Z0-9_.-]{3,20}$")
-    private String loginName;
-
+	private Date lastLoginDate;
+	
+	
 }

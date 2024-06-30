@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success - Account Created Successfully</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    /* Custom styles */
+    body {
+      background-color: #f8f9fa; /* Bootstrap background color */
+    }
+    .container {
+      margin-top: 50px; /* Adjust margin as needed */
+    }
+    .header-image {
+      max-width: 100%;
+      height: auto;
+    }
+    .success-message {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .success-message a {
+      color: #007bff; /* Bootstrap primary color for links */
+      text-decoration: none; /* Remove underline */
+    }
+    .success-message a:hover {
+      color: #0056b3; /* Darker shade of primary color on hover */
+      text-decoration: underline; /* Underline on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Header with image -->
+        <header>
+          <img src="path/to/your/image.jpg" alt="Header Image" class="header-image img-fluid">
+        </header>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Success message -->
+        <div class="success-message">
+          <h2>Account Created Successfully</h2>
+          <p>Please <a th:href="@{/login}">login</a> using your credentials.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
