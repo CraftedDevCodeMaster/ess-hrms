@@ -12,4 +12,6 @@ import jakarta.transaction.Transactional;
 public interface EssSignUpRepository extends JpaRepository<EssSignUp, Long> {
 
 	boolean existsByEmail(String email);
+
+	EssSignUp findByEmail(String email);
 }

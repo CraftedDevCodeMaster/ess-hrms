@@ -19,5 +19,9 @@ public class EssSignUpService {
 	public boolean emailExists(String email) {
 		return essSignUpRepository.existsByEmail(email);
 	}
-	
+
+	public EssSignUp findByEmail(String email) {
+		return essSignUpRepository.findByEmail(email);
+	}
+
 }

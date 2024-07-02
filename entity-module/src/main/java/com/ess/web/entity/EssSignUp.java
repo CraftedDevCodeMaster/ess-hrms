@@ -56,4 +56,6 @@ public class EssSignUp {
 	@Pattern(regexp = "[0-9]{10}", message = "Mobile number must be exactly 10 digits")
 	private Long mobileNumber;
 
+	private Date lastModifiedDate;
+
 }

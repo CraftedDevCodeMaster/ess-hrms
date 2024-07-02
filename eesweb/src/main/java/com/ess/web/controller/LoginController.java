@@ -61,7 +61,17 @@ public class LoginController {
 			String plainPassword = essSignUp.getNewPassword();
 			essSignUp.setNewPassword(passwordEncoder.encode(plainPassword));
 			essSignUp.setCreateDate(new Date());
+			essSignUp.setLastModifiedDate(new Date());
+
 			essSignUpService.save(essSignUp);
+
+			EssUser essUser = new EssUser();
+			essUser.setEmail(essSignUp.getEmail());
+			essUser.setLastLoginDate(new Date());
+			essUser.setPassword(essSignUp.getNewPassword());
+			essUser.setUserName(String.format("%s %s", essSignUp.getFirstName(), essSignUp.getLastName()));
+
+			essUserService.save(essUser);
 
 			redirectAttributes.addFlashAttribute("successMessage", true);
 			return "redirect:/signUp";
@@ -82,23 +92,33 @@ public class LoginController {
 			RedirectAttributes redirectAttributes) {
 
 		log.info("emial:: {}, newpaw:: {}, conpas:: {}", email, newPassword, confirmPassowrd);
-		if (!essUserService.existsByEmail(email) || email == null) {
+		if (!essUserService.existsByEmail(email) && !essSignUpService.emailExists(email) || email == null) {
 			redirectAttributes.addFlashAttribute("message", "Please enter a valid email address");
 			return "redirect:/forgotPasswordForm";
 		}
 		if (!newPassword.isEmpty() && !confirmPassowrd.isEmpty() && newPassword.equals(confirmPassowrd)
-				&& essUserService.existsByEmail(email)) {
+				&& essUserService.existsByEmail(email) && essSignUpService.emailExists(email)) {
 			EssUser essUser = essUserService.findByEmail(email);
 			essUser.setPassword(passwordEncoder.encode(newPassword));
 			essUserService.save(essUser);
+
+			EssSignUp essSignUp = essSignUpService.findByEmail(email);
+			essSignUp.setNewPassword(essUser.getPassword());
+			essSignUp.setLastModifiedDate(new Date());
+
+			essSignUpService.save(essSignUp);
+
 			redirectAttributes.addFlashAttribute("successMessage", true);
 
 			redirectAttributes.addFlashAttribute("successMessage", "Password changed successfully. Please login");
-			return "redirect:/login";
-
+			return "redirect:/forgotPasswordForm";
 		}
 
-		return "redirect:/forgotPasswordForm";
+		else {
+			redirectAttributes.addFlashAttribute("message", "Please enter the requried inputs");
+
+			return "redirect:/forgotPasswordForm";
+		}
 	}
 
 	@GetMapping("/essDashboard")
