@@ -1,0 +1,129 @@
+	body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 90%;
+			max-width: 1200px;
+			margin: auto;
+			padding: 20px;
+		}
+
+		.company-info {
+			width: 45%;
+			padding: 20px;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.testimonial {
+			margin-bottom: 20px;
+		}
+
+		.sign-up-form {
+			width: 45%;
+			padding: 20px;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+		}
+
+		.btn-primary {
+			width: 100%;
+			transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		}
+
+		.btn-primary:hover {
+			background-color: #0056b3;
+			border-color: #0056b3;
+		}
+
+		.text-center {
+			margin-top: 20px;
+		}
+
+		.text-center a {
+			color: #007bff;
+			text-decoration: none;
+			transition: color 0.3s ease-in-out;
+		}
+
+		.text-center a:hover {
+			color: #0056b3;
+		}
+
+		.error-message {
+			color: red;
+			font-size: 0.875rem;
+			margin-top: 5px;
+		}
+
+		/* Media query for responsive layout */
+		@media (max-width: 768px) {
+			.container {
+				flex-direction: column;
+				align-items: stretch;
+			}
+
+			.company-info,
+			.sign-up-form {
+				width: 100%;
+				margin-bottom: 20px;
+			}
+		}
+
+		/* Custom styles for password visibility toggle */
+		.input-group-text {
+			padding: .375rem 1.1rem;
+		}
+
+		.input-group {
+			position: relative;
+		}
+
+		.toggle-password {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			cursor: pointer;
+			color: #999;
+			transition: color 0.3s ease-in-out;
+		}
+
+		.toggle-password:hover {
+			color: #555;
+		}
+
+		/* Custom style for disabled button */
+		.disabled-button {
+			pointer-events: none;
+			background-color: #ccc !important;
+			border-color: #ccc !important;
+		}
+
+		.alert-success {
+			background-color: #d4edda;
+			border-color: #c3e6cb;
+			color: #155724;
+			padding: 0.75rem 1.25rem;
+			margin-bottom: 1rem;
+			border: 1px solid transparent;
+			border-radius: 0.25rem;
+		}

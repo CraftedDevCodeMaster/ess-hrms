@@ -4,141 +4,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login</title>
+	<title>SignUp</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
 
-	<style>
-		body {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-			background-color: #f5f5f5;
-			margin: 0;
-			padding: 0;
-		}
+	<link rel="stylesheet" th:href="@{/css/signUp.css}">
+	<script th:src="@{/js/signUp.js}"></script>
 
-		.container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			width: 90%;
-			max-width: 1200px;
-			margin: auto;
-			padding: 20px;
-		}
-
-		.company-info {
-			width: 45%;
-			padding: 20px;
-			background-color: #fff;
-			border: 1px solid #ccc;
-			border-radius: 8px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		}
-
-		.testimonial {
-			margin-bottom: 20px;
-		}
-
-		.sign-up-form {
-			width: 45%;
-			padding: 20px;
-			background-color: #fff;
-			border: 1px solid #ccc;
-			border-radius: 8px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		}
-
-		.form-group {
-			margin-bottom: 20px;
-		}
-
-		.btn-primary {
-			width: 100%;
-			transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-		}
-
-		.btn-primary:hover {
-			background-color: #0056b3;
-			border-color: #0056b3;
-		}
-
-		.text-center {
-			margin-top: 20px;
-		}
-
-		.text-center a {
-			color: #007bff;
-			text-decoration: none;
-			transition: color 0.3s ease-in-out;
-		}
-
-		.text-center a:hover {
-			color: #0056b3;
-		}
-
-		.error-message {
-			color: red;
-			font-size: 0.875rem;
-			margin-top: 5px;
-		}
-
-		/* Media query for responsive layout */
-		@media (max-width: 768px) {
-			.container {
-				flex-direction: column;
-				align-items: stretch;
-			}
-
-			.company-info,
-			.sign-up-form {
-				width: 100%;
-				margin-bottom: 20px;
-			}
-		}
-
-		/* Custom styles for password visibility toggle */
-		.input-group-text {
-			padding: .375rem 1.1rem;
-		}
-
-		.input-group {
-			position: relative;
-		}
-
-		.toggle-password {
-			position: absolute;
-			top: 50%;
-			right: 10px;
-			transform: translateY(-50%);
-			cursor: pointer;
-			color: #999;
-			transition: color 0.3s ease-in-out;
-		}
-
-		.toggle-password:hover {
-			color: #555;
-		}
-
-		/* Custom style for disabled button */
-		.disabled-button {
-			pointer-events: none;
-			background-color: #ccc !important;
-			border-color: #ccc !important;
-		}
-
-		.alert-success {
-			background-color: #d4edda;
-			border-color: #c3e6cb;
-			color: #155724;
-			padding: 0.75rem 1.25rem;
-			margin-bottom: 1rem;
-			border: 1px solid transparent;
-			border-radius: 0.25rem;
-		}
-	</style>
 </head>
 
 <body>
@@ -239,64 +115,6 @@
 		</div>
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
-
-	<script>
-		// Function to toggle password visibility
-		function togglePasswordVisibility(inputId) {
-			var passwordInput = document.getElementById(inputId);
-			var icon = document.getElementById(inputId + 'Icon');
-
-			if (passwordInput.type === 'password') {
-				passwordInput.type = 'text';
-				icon.classList.remove('fa-eye-slash');
-				icon.classList.add('fa-eye');
-			} else {
-				passwordInput.type = 'password';
-				icon.classList.remove('fa-eye');
-				icon.classList.add('fa-eye-slash');
-			}
-
-			// Focus on the input to trigger placeholder display
-			passwordInput.focus();
-			// Blur immediately to reset focus
-			passwordInput.blur();
-		}
-
-		// Function to validate password strength
-		function validatePassword() {
-			var newPasswordInput = document.getElementById('newPassword');
-			var confirmPasswordInput = document.getElementById('confirmPassword');
-			var newPasswordError = document.getElementById('newPasswordError');
-			var confirmPasswordError = document.getElementById('confirmPasswordError');
-			var signupButton = document.getElementById('signupButton');
-
-			// Reset error messages
-			newPasswordError.textContent = '';
-			confirmPasswordError.textContent = '';
-
-			// Password validation
-			if (newPasswordInput.value.length < 6) {
-				newPasswordError.textContent = 'Password must be at least 6 characters long';
-				signupButton.disabled = true; // Disable sign up button
-				confirmPasswordInput.disabled = true; // Disable confirm password field
-			} else {
-				signupButton.disabled = false; // Enable sign up button
-				confirmPasswordInput.disabled = false; // Enable confirm password field
-			}
-
-			if (newPasswordInput.value !== confirmPasswordInput.value) {
-				confirmPasswordError.textContent = 'Passwords do not match';
-				signupButton.disabled = true; // Disable sign up button
-			}
-		}
-
-		// Initial call to validate password fields on page load
-		validatePassword();
-	</script>
 </body>
 
 </html>

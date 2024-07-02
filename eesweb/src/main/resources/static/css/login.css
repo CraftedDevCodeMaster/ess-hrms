@@ -1,0 +1,99 @@
+body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f5f5f5;
+		}
+
+		.card {
+			width: 400px;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.card:hover {
+			transform: scale(1.02);
+		}
+
+		.card-body {
+			padding: 20px;
+		}
+
+		.card-title {
+			margin-bottom: 20px;
+			font-size: 1.5rem;
+			text-align: center;
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+		}
+
+		.input-group-text {
+			padding: .375rem 1.1rem;
+		}
+
+		.input-group {
+			position: relative;
+		}
+
+		.toggle-password {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			cursor: pointer;
+			color: #999;
+			transition: color 0.3s ease-in-out;
+		}
+
+		.toggle-password:hover {
+			color: #555;
+		}
+
+		#passwordHelpBlock {
+			margin-top: 10px;
+		}
+
+		.btn-primary {
+			width: 100%;
+			transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		}
+
+		.btn-primary:hover {
+			background-color: #0056b3;
+			border-color: #0056b3;
+		}
+
+		.text-center {
+			margin-top: 20px;
+		}
+
+		.text-center a {
+			color: #007bff;
+			text-decoration: none;
+			transition: color 0.3s ease-in-out;
+		}
+
+		.text-center a:hover {
+			color: #0056b3;
+		}
+
+		.error-message {
+			color: red;
+			font-size: 0.875rem;
+			margin-top: 5px;
+		}
+
+		.alert-success {
+			background-color: #d4edda;
+			border-color: #c3e6cb;
+			color: #155724;
+			padding: 0.75rem 1.25rem;
+			margin-bottom: 1rem;
+			border: 1px solid transparent;
+			border-radius: 0.25rem;
+		}
