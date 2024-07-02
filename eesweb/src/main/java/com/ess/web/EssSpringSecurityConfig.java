@@ -1,64 +1,29 @@
 package com.ess.web;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.web.cors.CorsConfiguration;
-/**
- * @author PRAVEENREDDY R
- */
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 @Configuration
 @EnableWebSecurity
-public class EssSpringSecurityConfig {
+public class EssSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private AuthenticationProvider essAuthenticationProvider;
+	private final AuthenticationProvider essAuthenticationProvider;
 
 	public EssSpringSecurityConfig(AuthenticationProvider essAuthenticationProvider) {
 		this.essAuthenticationProvider = essAuthenticationProvider;
 	}
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.cors(cors -> cors.configurationSource(request -> {
-			CorsConfiguration config = new CorsConfiguration();
-			config.setAllowedOrigins(Collections.singletonList("*"));
-			config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-			config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
-			return config;
-		})).csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-				.authenticationProvider(essAuthenticationProvider) // Inject your custom authentication provider
-				.authorizeRequests(authorize -> authorize.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-						.requestMatchers("/login", "/signUp", "/forgotPasswordForm").permitAll().anyRequest()
-						.authenticated())
-				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/essDashboard")
-						.failureUrl("/login?error=true"))
-				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login").invalidateHttpSession(true)
-						.deleteCookies("JSESSIONID"));
-		return http.build();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable() // Disable CSRF for testing purposes
+				.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+				.antMatchers("/login", "/signUp", "/forgotPasswordForm", "/verify-otp", "/send-otp").permitAll()
+				.anyRequest().authenticated().and().authenticationProvider(essAuthenticationProvider).formLogin()
+				.loginPage("/login").defaultSuccessUrl("/essDashboard").failureUrl("/login?error=true").and().logout()
+				.logoutUrl("/logout").logoutSuccessUrl("/login").invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID");
 	}
-//		// Configure CORS and CSRF
-//		http.cors(withDefaults()).csrf(withDefaults())
-//
-//				.authenticationProvider(essAuthenticationProvider)
-//
-//				.authorizeRequests(authorize -> authorize.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-//						.requestMatchers("/login","/signUp").permitAll().anyRequest().authenticated())
-//
-//				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/essDashboard")
-//						.failureUrl("/login?error=true"))
-//
-//				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login").invalidateHttpSession(true)
-//						.deleteCookies("JSESSIONID"));
-//
-//		return http.build();
-//	}
 }

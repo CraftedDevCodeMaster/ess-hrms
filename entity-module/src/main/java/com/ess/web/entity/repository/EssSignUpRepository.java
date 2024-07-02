@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ess.web.entity.EssSignUp;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 
 @Repository
 @Transactional
