@@ -67,6 +67,12 @@ public class LoginController {
 		return "signUp";
 	}
 
+	@GetMapping("/index")
+	public String essHomePage() {
+		return "redirect:/index";
+
+	}
+
 	@PostMapping("/signUp")
 	public String signup(@ModelAttribute("essSignUp") EssSignUp essSignUp, RedirectAttributes redirectAttributes) {
 		if (essSignUp == null) {
@@ -144,6 +150,26 @@ public class LoginController {
 	}
 
 	// OTP
+	@PostMapping("/send-otp-reset")
+	public ResponseEntity<String> sendOTPResetPassword(@RequestParam("email") String email) {
+		// Generate OTP
+		String otp = generateOtp();
+
+		// Store OTP with email and timestamp
+		OTPManager.storeOTP(email, otp, LocalDateTime.now());
+
+		// Simulate sending OTP via email
+		if (essSignUpService.emailExists(email) && essUserService.existsByEmail(email)) {
+			sendOTPEmail(email, otp);
+
+			// Return a JSON response indicating success
+			return ResponseEntity.ok("OTP sent successfully to " + email);
+
+		} else {
+			// Invalid OTP or email not found
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Enter valid Email address");
+		}
+	}
 
 	@PostMapping("/send-otp")
 	public ResponseEntity<String> sendOTP(@RequestParam("email") String email) {
@@ -153,12 +179,17 @@ public class LoginController {
 		// Store OTP with email and timestamp
 		OTPManager.storeOTP(email, otp, LocalDateTime.now());
 
-		// Simulate sending OTP via email
+		if (!essSignUpService.emailExists(email) && !essUserService.existsByEmail(email)) {
 
-		sendOTPEmail(email, otp);
+			// Return a JSON response indicating success
+			sendOTPEmail(email, otp);
+			return ResponseEntity.ok("OTP sent successfully to " + email);
 
-		// Return a JSON response indicating success
-		return ResponseEntity.ok("OTP sent successfully to " + email);
+		} else {
+			// Invalid OTP or email not found
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email id alredy exist");
+		}
+
 	}
 
 	@PostMapping("/verify-otp")

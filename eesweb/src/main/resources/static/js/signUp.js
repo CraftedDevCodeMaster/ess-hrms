@@ -58,7 +58,7 @@ function validateEmailAndShowOTP() {
 
 	// Validate email format
 	if (!isValidEmail(email)) {
-		alert('Please enter a valid email address.');
+		showFormMessage('failureMessage', 'Please enter a valid email address', false);
 		return;
 	}
 
@@ -90,13 +90,15 @@ async function sendOTP(email) {
 			let data = await response.text();
 			// Show success message
 			showFormMessage('successMessage', data, true);
+			document.getElementById('workEmail').readOnly = true; // Make email field read-only
+
 			// Show OTP input field after success message
 			document.getElementById('sendOTPButton').style.display = 'none';
 			document.getElementById('otpInputSection').style.display = 'block';
 		} else {
 			let errorMessage = await response.text();
 			// Show failure message
-			showFormMessage('failureMessage', `Failed to send OTP: ${errorMessage}`, false);
+			showFormMessage('failureMessage', ` ${errorMessage}`, false);
 		}
 	} catch (error) {
 		console.error('Error sending OTP:', error);
@@ -126,7 +128,7 @@ async function verifyOTP() {
 		} else {
 			let errorMessage = await response.text();
 			// Show failure message
-			showFormMessage('failureMessage', `Failed to verify OTP: ${errorMessage}`, false);
+			showFormMessage('failureMessage', ` ${errorMessage}`, false);
 		}
 	} catch (error) {
 		console.error('Error verifying OTP:', error);

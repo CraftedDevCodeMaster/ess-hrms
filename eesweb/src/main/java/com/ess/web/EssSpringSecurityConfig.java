@@ -18,12 +18,12 @@ public class EssSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable() // Disable CSRF for testing purposes
-				.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll()
-				.antMatchers("/login", "/signUp", "/forgotPasswordForm", "/verify-otp", "/send-otp").permitAll()
-				.anyRequest().authenticated().and().authenticationProvider(essAuthenticationProvider).formLogin()
-				.loginPage("/login").defaultSuccessUrl("/essDashboard").failureUrl("/login?error=true").and().logout()
-				.logoutUrl("/logout").logoutSuccessUrl("/login").invalidateHttpSession(true)
+		http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+				.antMatchers("/", "/login", "/signUp", "/forgotPasswordForm", "/verify-otp", "/send-otp",
+						"/send-otp-reset")
+				.permitAll().anyRequest().authenticated().and().authenticationProvider(essAuthenticationProvider)
+				.formLogin().loginPage("/login").defaultSuccessUrl("/essDashboard").failureUrl("/login?error=true")
+				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login").invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID");
 	}
 }
