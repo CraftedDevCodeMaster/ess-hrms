@@ -109,6 +109,43 @@
 			border: 1px solid transparent;
 			border-radius: 0.25rem;
 		}
+
+		.captcha-container {
+			display: flex;
+			align-items: center;
+			background: url('your-background-image-url.jpg') no-repeat center center;
+			/* Add your image URL here */
+			background-size: cover;
+			/* Adjust as needed */
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			padding: 10px;
+			position: relative;
+
+		}
+
+		#captcha {
+			border: 0px solid #ccc;
+			background: url('your-background-image-url.jpg') no-repeat center center;
+			/* Add your image URL here */
+			border-radius: 0px 20px 0px 20px;
+			padding: 0px 0px;
+			width: 200px;
+		}
+
+		.captcha-buttons {
+			margin-left: 10px;
+		}
+
+		.captcha-buttons .btn {
+			margin-left: 5px;
+		}
+
+		.captcha-error {
+			color: red;
+			font-size: 0.875rem;
+			margin-top: 5px;
+		}
 	</style>
 </head>
 
@@ -118,7 +155,6 @@
 			<div class="card-title">
 				<img th:src="@{/images/reddysicpn-removebg-preview.png}" alt="Logo" width="150px" height="60px">
 			</div>
-			<!--<h5 class="card-title">Reddy's</h5>-->
 
 			<form id="loginForm" th:action="@{/login}" method="post">
 				<!-- Display error message if login attempt failed -->
@@ -145,7 +181,21 @@
 						<a th:href="@{/forgotPasswordForm}" id="forgotPasswordLink" class="text-decoration-none">Forgot
 							password?</a>
 					</small>
+				</div>
 
+				<div class="form-group captcha-container">
+					<canvas id="captcha" width="150" height="40"></canvas>
+					<div class="captcha-buttons">
+						<button type="button" class="btn btn-primary" id="refresh-captcha">↻</button>
+					</div>
+					<div class="captcha-buttons">
+						<button type="button" class="btn btn-primary" id="speak-captcha">🔊</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" id="captcha-input" placeholder="Enter Captcha"
+						style="width: 150px;" required>
+					<span id="captchaError" class="captcha-error"></span>
 				</div>
 				<button type="submit" class="btn btn-primary" id="loginButton" disabled>Login</button>
 			</form>
@@ -204,6 +254,108 @@
 				passwordInput.removeAttribute('disabled');
 			}
 		}
+
+
+		//Generate CAPTCHA
+
+		document.addEventListener("DOMContentLoaded", function () {
+			const captchaCanvas = document.getElementById('captcha');
+			const captchaInput = document.getElementById('captcha-input');
+			const captchaError = document.getElementById('captchaError');
+			const refreshCaptcha = document.getElementById('refresh-captcha');
+			const speakCaptcha = document.getElementById('speak-captcha');
+			const loginButton = document.getElementById('loginButton');
+
+			let captchaCode = '';
+
+			function generateCaptcha() {
+				captchaCode = '';
+				const charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+				const fontsArray = ["Arial", "Verdana", "Courier New", "Georgia", "Times New Roman", "Comic Sans MS"];
+				const ctx = captchaCanvas.getContext('2d');
+				ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+
+				for (let i = 0; i < 5; i++) {
+					const char = charsArray.charAt(Math.floor(Math.random() * charsArray.length));
+					captchaCode += char;
+
+					ctx.font = `${Math.floor(Math.random() * 10) + 20}px ${fontsArray[Math.floor(Math.random() * fontsArray.length)]}`;
+					ctx.fillStyle = getDarkColor(); // Use dark colors for the CAPTCHA text
+					const x = 10 + (i * 25);
+					const y = Math.floor(Math.random() * 15) + 25;
+					const angle = (Math.random() - 0.5) * 0.5; // Random angle between -0.25 and 0.25 radians
+
+					ctx.save();
+					ctx.translate(x, y);
+					ctx.rotate(angle);
+					ctx.fillText(char, 0, 0);
+					ctx.restore();
+				}
+			}
+
+			function getDarkColor() {
+				const letters = '0123456789ABCDEF';
+				let color = '#';
+				for (let i = 0; i < 6; i++) {
+					// Darker color by avoiding high values
+					color += letters[Math.floor(Math.random() * 5)]; // 0-4 for darker colors
+				}
+				return color;
+			}
+
+			function validateCaptcha() {
+				if (captchaInput.value === captchaCode) {
+					captchaError.textContent = '';
+					loginButton.removeAttribute('disabled');
+				} else {
+					captchaError.textContent = 'Enter a valid captcha';
+					loginButton.setAttribute('disabled', 'disabled');
+				}
+			}
+
+			function speakCaptchaText() {
+				const synth = window.speechSynthesis;
+				let index = 0;
+
+				function speakNextCharacter() {
+					if (index < captchaCode.length) {
+						const char = captchaCode[index];
+						let utteranceText = char;
+
+						if (char.match(/[a-z]/)) {
+							utteranceText = `small ${char}`;
+						} else if (char.match(/[A-Z]/)) {
+							utteranceText = `caps ${char}`;
+						}
+
+						const utterance = new SpeechSynthesisUtterance(utteranceText);
+						utterance.lang = 'en-US';
+
+						synth.speak(utterance);
+						index++;
+
+						utterance.onend = function () {
+							setTimeout(speakNextCharacter, 500); // 0.5 second delay for each character
+						};
+					}
+				}
+
+				speakNextCharacter();
+			}
+
+			refreshCaptcha.addEventListener('click', function () {
+				generateCaptcha();
+				validateCaptcha(); // Reset CAPTCHA validation on refresh
+			});
+
+			speakCaptcha.addEventListener('click', speakCaptchaText);
+
+			captchaInput.addEventListener('input', validateCaptcha);
+
+			generateCaptcha(); // Generate CAPTCHA on page load
+		});
+
+
 	</script>
 </body>
 
