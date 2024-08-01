@@ -19,7 +19,7 @@ jobs:
     - name: Print working directory
       run: pwd
 
-    - name: List directory contents
+    - name: List root directory contents
       run: ls -al
 
     - name: Set up JDK 17
@@ -37,20 +37,5 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    - name: Navigate to project directory
-      run: |
-        if [ -f "pom.xml" ]; then
-          echo "Found pom.xml in the root directory."
-        else
-          echo "pom.xml not found in the root directory. Listing all directories..."
-          ls -al
-        fi
-
     - name: Build with Maven
-      run: |
-        if [ -f "pom.xml" ]; then
-          mvn clean install --batch-mode
-        else
-          echo "pom.xml not found. Please check the directory structure."
-          exit 1
-        fi
+      run: mvn clean install --batch-mode
