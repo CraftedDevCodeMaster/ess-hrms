@@ -19,7 +19,7 @@ jobs:
     - name: Print working directory
       run: pwd
 
-    - name: List root directory contents
+    - name: List directory contents
       run: ls -al
 
     - name: Set up JDK 17
@@ -36,6 +36,9 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+
+    - name: Change to parent directory
+      run: cd parent
 
     - name: Build with Maven
       run: mvn clean install --batch-mode
