@@ -26,6 +26,13 @@ ESS-HRMS (Employee Self-Service Human Resource Management System) is a Spring Bo
 
 ### Clone the Repository
 
-```bash
+``` bash
 git clone https://github.com/CraftedDevCodeMaster/ess-hrms.git
-cd ess-hrms
+cd ess-hrms ```
+
+### Build the Project
+
+``` bash
+mcn clean install 
+cd ess-hrms ```
+
