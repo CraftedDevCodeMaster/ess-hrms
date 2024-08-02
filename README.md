@@ -26,13 +26,20 @@ ESS-HRMS (Employee Self-Service Human Resource Management System) is a Spring Bo
 
 ### Clone the Repository
 
-``
+```
 git clone https://github.com/CraftedDevCodeMaster/ess-hrms.git
-cd ess-hrms ```
+cd ess-hrms
+```
 
 ### Build the Project
 
-``
+```
 mcn clean install 
-cd ess-hrms ```
-
+cd ess-hrms
+```
+## Running the Application
+- To run the application, navigate to the eesweb module and use the following command:
+```
+cd eesweb
+mvn spring-boot:run
+```
